@@ -49,7 +49,7 @@ public class EvolviceTaskApplicationTests {
 	    	
 	        when(carRepository.findAll()).thenReturn(cars);
 	        
-	        assertEquals(cars, carController.getAllCars());
+	        assertEquals(cars, carController.getAllCars().getBody());
 	    }
 	    @Test(expected= ResourceNotFoundException.class)
 	    public void testGetCar() throws Exception {
@@ -63,7 +63,7 @@ public class EvolviceTaskApplicationTests {
 	    	
 	        when(carRepository.save(bMWCar)).thenReturn(bMWCar);
 
-	        assertEquals("BMW", carController.save(bMWCar).getBrand());
+	        assertEquals("BMW", carController.save(bMWCar).getBody().getBrand());
 	    }	   
 
 }

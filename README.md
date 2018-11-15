@@ -4,10 +4,13 @@
 	c- build project using maven build.
 	d- run EvolviceTaskApplication as Spring boot app.
 
-Note: below number 2 will show you how to use the apis of app.
+2-Authentication  with (JWT)
+
+send a POST request to http://localhost:8080/login with our user's credentials in the body: {"username":"admin","password":"password"}
+and get Authentication value from headers in response then put this header to each request send to App
 
 2- generate documentation for a Spring REST API Swagger 2 (Springfox) 
-	a- after run app use below link to run documentation and know how to use apis  
+	a- after run app use open below link in your browser you will see documentation to know how to use apis  
 		http://localhost:8080/swagger-ui.html .
 
 3- metrics endpoint.

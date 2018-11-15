@@ -11,14 +11,17 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
-public class Car {
+public class Car extends ResourceSupport {
 	@ApiModelProperty(required = false, hidden = true)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name="id")
+	private Long carId;
 
 	@Column
 	@NotBlank
@@ -35,12 +38,12 @@ public class Car {
 	@NotBlank
 	private String modelDetails;
 
-	public Long getId() {
-		return id;
+	public Long getCarId() {
+		return carId;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.carId = id;
 	}
 
 	public String getBrand() {

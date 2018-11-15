@@ -5,6 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,27 +30,29 @@ public class CarController {
     
    
     @GetMapping(path="/cars")
-    public List<Car> getAllCars() {
-       return  carRepository.findAll();
+    public HttpEntity<List<Car>> getAllCars() {
+       return new ResponseEntity<>(carRepository.findAll(),HttpStatus.OK);
     }
     @GetMapping(path="/cars/{id}")
-    public Car getCar(@PathVariable long id) {
-       return  carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car", "id", id));
+    public HttpEntity<Car> getCar(@PathVariable long id) {
+    	Car car=  carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car", "id", id));
+    	return new ResponseEntity<>(car,HttpStatus.OK);
     }
     @PostMapping(path="/cars")
-    public Car save(@RequestBody(required = true) @Valid Car car) {
-    	return carRepository.save(car);
+    public HttpEntity<Car> save(@RequestBody(required = true) @Valid Car car) {
+    	return new ResponseEntity<>(carRepository.save(car),HttpStatus.CREATED);
     }
     @DeleteMapping(path="/cars/{id}")
-    public void deleteCar(@PathVariable(required = true) long id) {
+    public HttpEntity<?> deleteCar(@PathVariable(required = true) long id) {
     	
     	Car carToDelete = carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car", "id", id));
     	carRepository.delete(carToDelete);
+    	return new ResponseEntity<>(HttpStatus.OK);
     }
     @PutMapping(path="/cars/{id}")
-    public Car UpdateCar(@PathVariable(required = true) long id,@RequestBody(required = true) @Valid Car car) {
+    public HttpEntity<Car> UpdateCar(@PathVariable(required = true) long id,@RequestBody(required = true) @Valid Car car) {
     	carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car", "id", id));
     	car.setId(id);
-    	return carRepository.save(car);
+    	return new ResponseEntity<>(carRepository.save(car),HttpStatus.CREATED);
     }
 }
